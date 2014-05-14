@@ -1,7 +1,7 @@
 import pytest
 
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 
 def pytest_configure(config):
@@ -13,7 +13,7 @@ def pytest_configure(config):
 
 
 @pytest.fixture(autouse=True)
-def _haystack_marker(request):
+def _haystack_marker(request, db):
     """
     Implement the 'haystack' marker.
 
