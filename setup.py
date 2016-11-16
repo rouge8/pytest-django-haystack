@@ -16,7 +16,7 @@ def read(fname):
 
 
 setup(name='pytest-django-haystack',
-      version='0.1.1',
+      version='0.2.0',
       description='Cleanup your Haystack indexes between tests',
       author='Andy Freeland',
       author_email='andy@andyfreeland.net',
