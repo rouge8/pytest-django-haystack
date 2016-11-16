@@ -13,7 +13,7 @@ def pytest_configure(config):
 
 
 @pytest.fixture(autouse=True)
-def _haystack_marker(request, db):
+def _haystack_marker(request):
     """
     Implement the 'haystack' marker.
 
@@ -24,6 +24,7 @@ def _haystack_marker(request, db):
     if marker:
         from pytest_django.lazy_django import skip_if_no_django
         from django.core.management import call_command
+        request.getfuncargvalue('db')
 
         def clear_index():
             call_command('clear_index', interactive=False)
