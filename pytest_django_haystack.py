@@ -18,6 +18,9 @@ def _haystack_marker(request):
     Implement the 'haystack' marker.
 
     This rebuilds the index at the start of each test and clears it at the end.
+
+    Takes an optional connection parameter; if set, clears and rebuilds
+    only the specified haystack connections.
     """
     marker = request.keywords.get('haystack', None)
 
@@ -26,12 +29,20 @@ def _haystack_marker(request):
         from django.core.management import call_command
         request.getfuncargvalue('db')
 
+        # optional haystack connection parameter
+        # if specified, pass to clear_index and rebuild_index
+        connection = marker.kwargs.get('connection', None)
+        index_args = {}
+        if connection:
+            index_args['using'] = connection
+
         def clear_index():
-            call_command('clear_index', interactive=False)
+
+            call_command('clear_index', interactive=False, **index_args)
 
         # Skip if Django is not configured
         skip_if_no_django()
 
         request.addfinalizer(clear_index)
 
-        call_command('rebuild_index', interactive=False)
+        call_command('rebuild_index', interactive=False, **index_args)
