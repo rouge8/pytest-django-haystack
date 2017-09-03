@@ -8,3 +8,9 @@ Quick start
 
 1. ``pip install pytest-django-haystack``
 2. Mark tests with the ``pytest.mark.haystack`` marker.
+
+
+You can optionally specify which haystack connection(s) should be used::
+
+    @pytest.mark.haystack(connection=["test"])
+
